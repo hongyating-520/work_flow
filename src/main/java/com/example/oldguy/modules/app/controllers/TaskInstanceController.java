@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: TaskController
@@ -36,9 +38,12 @@ public class TaskInstanceController {
     private TaskService taskService;
 
     @ApiOperation("完成任务")
-    @GetMapping("runtime/{taskId}/complete")
-    public CommonRsp completeTask(@PathVariable String taskId){
-        taskService.complete(taskId);
+    @GetMapping("runtime/{taskId}/complete/{approved}")
+    public CommonRsp completeTask(@PathVariable String taskId,@PathVariable Boolean approved){
+        Map<String, Object> map = new HashMap<>();
+        map.put("approved", approved?"Y":"N");//审批结果
+        map.put("comment", approved?"同意，审批通过！":"拒绝，让狗审批！");//审批意见
+        taskService.complete(taskId,map);
         return CommonRsp.SUCCESS;
     }
 

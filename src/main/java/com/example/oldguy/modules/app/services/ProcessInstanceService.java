@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: ProcessInstanceService
@@ -46,7 +48,11 @@ public class ProcessInstanceService {
      * @return
      */
     public ProcessInstance startProcessInstance(String processDefinitionKey){
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
+        //流程中定义的变量：需要通过map传入"如审批人等等
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("juniorAdmin", "juniorAdmin"); // 初级审批用户
+        variables.put("seniorAdmin", "seniorAdmin");
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey,variables);
         return processInstance;
     }
 

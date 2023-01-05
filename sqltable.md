@@ -10,5 +10,19 @@ DEPLOYMENT_ID 字段，和 ACT_RE_DEPLOYMENT 表进行关联
 
 ##### 3.ACT_GE_BYTEARRAY
 储存xml文件及对应工作流图片
+#### 4.创建工作流实例后：生成对应任务：ACT_RU_TASK
+所有操作记录报错在ACT_RU_ACTINST
+
+流程驱动：
+    根据bpms定义的class，通过类加载器夹在执行
+### 1.定义activiti class
+<serviceTask id="sendSeniorRejectEmail" name="发送高级审批拒绝邮件"
+    activiti:class="com.chinaums.web.controller.flowable2.delegate.SendSeniorRejectionMailDelegate">
+</serviceTask>
+### 2.编写JavaDelegate实现自动逻辑（也就是组件对应实现）
+
+![img.png](img.png)
+
+
 
 
